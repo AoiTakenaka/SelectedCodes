@@ -1,0 +1,6 @@
+webpack.config.js
+public/**/*
+utils/**/*
+.eslintrc.js
+tailwind.config.js
+postcss.config.js

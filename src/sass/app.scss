@@ -1,0 +1,10 @@
+@charset "utf-8";
+@import "setting";
+
+@media screen and (min-width: $w-sp + 1) {
+  // pc用スタイルここから
+} // End MediaQuery
+
+@media screen and (max-width: $w-sp) {
+  // sp用スタイルここから
+} // End MediaQuery
