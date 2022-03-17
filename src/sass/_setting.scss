@@ -1,8 +1,40 @@
 @charset "utf-8";
 
-// サイト横幅
 $w-site: 1080px;
-// ブレイクポイント
+$w-site-wide: 1440px;
 $w-sp: 767px;
+$w-pc: 768px;
+
 // 標準イージング
 $ease: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+// メディアクエリMixin
+@mixin sp() {
+  @media screen and (max-width: $w-sp) {
+    @content;
+  }
+}
+@mixin pc() {
+  @media screen and (min-width: $w-pc) {
+    @content;
+  }
+}
+@mixin wide() {
+  @media screen and (min-width: $w-site-wide) {
+    @content;
+  }
+}
+
+@mixin setColumn($division: 4, $marginLeft: 5%, $marginTop: $marginLeft) {
+  display: flex;
+  flex-wrap: wrap;
+  > * {
+    width: calc((100% - #{$marginLeft} * (#{$division} - 1)) / #{$division});
+    &:not(:nth-child(#{$division}n + 1)) {
+      margin-left: $marginLeft;
+    }
+    &:nth-child(n + #{$division + 1}) {
+      margin-top: $marginTop;
+    }
+  }
+}

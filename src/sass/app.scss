@@ -1,10 +1,123 @@
 @charset "utf-8";
+@import "reset";
 @import "setting";
 
-@media screen and (min-width: $w-sp + 1) {
-  // pc用スタイルここから
-} // End MediaQuery
+html {
+  font-size: 62.5%;
+}
+body {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  font-size: 1.6rem;
+  letter-spacing: 0.05em;
+  line-height: 1.71;
+  color: #000;
+  @include sp {
+    font-size: 1.4rem;
+  }
+  @include pc {
+    min-width: 1079px;
+  }
+}
+img {
+  height: auto;
+}
+.pc {
+  @include sp {
+    display: none !important;
+  }
+}
+.sp {
+  @include pc {
+    display: none !important;
+  }
+}
 
-@media screen and (max-width: $w-sp) {
-  // sp用スタイルここから
-} // End MediaQuery
+#modal {
+  &-area {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    pointer-events: none;
+  }
+  &-mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(#000, 0.8);
+    z-index: 10;
+    cursor: pointer;
+    opacity: 0;
+  }
+  &-container {
+    position: relative;
+    z-index: 20;
+    opacity: 0;
+    position: absolute;
+    top: calc(50% + 25px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &-close {
+    cursor: pointer;
+    transition: opacity 0.5s $ease;
+    display: inline-block;
+    position: absolute;
+    top: -50px;
+    right: 0;
+    z-index: 20;
+    margin-bottom: 10px;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+  &-cross {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #fff;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      margin: auto;
+    }
+    &::before {
+      transform: rotate(-45deg);
+    }
+    &::after {
+      transform: rotate(45deg);
+    }
+  }
+}
+#modal-area.is-active {
+  pointer-events: visible;
+  #modal-mask {
+    opacity: 1;
+  }
+  #modal-container {
+    opacity: 1;
+  }
+}
+.modal-tirgger {
+  cursor: pointer;
+}
+.modal-content {
+  background: #fff;
+  max-height: calc(90vh - 50px);
+  overflow-y: scroll;
+}

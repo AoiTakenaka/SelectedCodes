@@ -6,13 +6,16 @@ import fragmentSource from '../shaders/fragmentShader.frag';
 
 export default class ThreeCanvas {
   constructor() {
+    this.canvas = document.querySelector('#canvas');
+    if (!this.canvas) return;
+
     // キャンバスサイズ
     this.width = window.innerWidth;
     this.height = window.innerHeight;
 
     // レンダー
     this.renderer = new THREE.WebGLRenderer({
-      canvas: document.querySelector('#threeCanvas'),
+      canvas: this.canvas,
     });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.width, this.height);
@@ -62,6 +65,7 @@ export default class ThreeCanvas {
   }
 
   render() {
+    if (!this.canvas) return;
     requestAnimationFrame(() => {
       this.render();
     });

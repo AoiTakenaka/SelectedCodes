@@ -5,8 +5,8 @@
 const figlet = require('figlet');
 
 module.exports = {
-  files: './public',
-  server: './public/',
+  files: './',
+  server: './',
   open: false,
 };
 
