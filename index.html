@@ -87,7 +87,7 @@
                                             カラムの要素の幅をx分の１％に指定して、flex-wrapにしたり、n番目以降の要素に上余白を設ける設定をしたり、ある場合では等差数列の式を考えたり、あるいは丁度前回やっていたりして、そこからコードを探したりするかもしれません。でもちょっと大変ですよね。しかもそれがカラム数が別々の時だとそのパターンを改めて組まなきゃならない。
                                         </p>
                                         <p>自分はめんどいな〜と思いつつ別個にコツコツと組んでいましたが、ある時これ抽象化できるかも！と直感が湧きました。</p>
-                                        <p>そこで研鑽たるコーディングの果てに生まれたコードがこちら↓</p>
+                                        <p>そこで研鑽たるコーディングの果てに鍛え上げた珠玉の一品がこちら↓</p>
                                     </div>
                                     <div class="code-wrapper">
                                         <div class="code-type-sass">sass</div>
@@ -112,13 +112,97 @@
                                 </div>
                                 <div class="section-chunk">
                                     <h2 class="chunk-title">そのコードで実現する結果</h2>
+                                    <div class="chunk-desc">
+                                        <p>mixin関数の引数に「カラム数、横隣の余白、縦隣の余白」を入れるだけで任意のカラム割ができます！</p>
+                                    </div>
+                                    <div class="chunk-desc">
+                                        <p>👇こんな冗長なコードが</p>
+                                    </div>
+                                    <div class="code-wrapper">
+                                        <div class="code-type-sass">sass</div>
+                                        <pre class="code">
+                                            .sample-col3 {
+                                                &emsp;ul {
+                                                    &emsp;&emsp;display: flex;
+                                                    &emsp;&emsp;flex-wrap: wrap;
+                                                &emsp;}
+                                                &emsp;li {
+                                                    &emsp;&emsp;width: 30%;
+                                                    &emsp;&emsp;&:not(:nth-child(3n + 1)) {
+                                                        &emsp;&emsp;&emsp;margin-left: 5%;
+                                                    &emsp;&emsp;}
+                                                    &emsp;&emsp;&:nth-child(n + 4) {
+                                                        &emsp;&emsp;&emsp;margin-top: 2.5%;
+                                                    &emsp;&emsp;}
+                                                &emsp;}
+                                            }
 
-                                    🦐
+                                            .sample-col5 {
+                                                &emsp;ul {
+                                                    &emsp;&emsp;display: flex;
+                                                    &emsp;&emsp;flex-wrap: wrap;
+                                                &emsp;}
+                                                &emsp;li {
+                                                    &emsp;&emsp;width: 16%;
+                                                    &emsp;&emsp;&:not(:nth-child(5n + 1)) {
+                                                        &emsp;&emsp;&emsp;margin-left: 3%;
+                                                    &emsp;&emsp;}
+                                                    &emsp;&emsp;&:nth-child(n + 6) {
+                                                        &emsp;&emsp;&emsp;margin-top: 6%;
+                                                    &emsp;&emsp;}
+                                                &emsp;}
+                                            }
+                                        </pre>
+                                    </div>
+                                    <div class="chunk-desc">
+                                        <p>👇のように結構省略できます！</p>
+                                    </div>
+                                    <div class="code-wrapper">
+                                        <div class="code-type-sass">sass</div>
+                                        <pre class="code">
+                                            .sample-col3 {
+                                                &emsp;ul {
+                                                    &emsp;&emsp;@include setColumn(3, 5%, 2.5%);
+                                                &emsp;}
+                                            }
+
+                                            .sample-col5 {
+                                                &emsp;ul {
+                                                    &emsp;&emsp;@include setColumn(5, 3%, 6%);
+                                                &emsp;}
+                                            }
+                                        </pre>
+                                    </div>
                                 </div>
                                 <div class="section-chunk">
                                     <h2 class="chunk-title">そのコードが素晴らしいと思う理由</h2>
-
-                                    🦐
+                                    <div class="chunk-desc">
+                                        <p>以上のようにsassの記述量を減らせるし、ある程度直感的にカラムを設定できるんじゃないでしょうか。</p>
+                                        <p>また、作ってもその時限りでしか使わないということがなく、自分が担当したページで使うことが結構あり汎用性・実用性があると言えるんじゃないでしょうか。</p>
+                                    </div>
+                                </div>
+                                <div class="section-chunk">
+                                    <h2 class="chunk-title">補足</h2>
+                                    <ul class="chunk-list">
+                                        <li>
+                                            引数を省略することができます。第3引数を省略すると横余白を縦余白に当て込み、縦横等間隔の余白となります。第1・第2引数を省略してもデフォルトで、縦横5%の余白の４分割カラムになります。
+                                        </li>
+                                        <li>マージンのパーセントをpx,em,rem,vw...などにすることもできます。</li>
+                                        <li>flex関連でこの関数に定義しているのはflex-wrapだけなので自由にカスタマイズできます。</li>
+                                        <li>
+                                            pc/spの使い分けはどうするのと思われるかもしれません。引数にスマホ用の枠を設けて使い分けることもできますが、その時引数の数が少なくとも６つ必要になるので意図的に実装していません。お馴染みの「@include:
+                                            pc{}, @include: sp{}」で分けてやるのが良いかと思います。
+                                        </li>
+                                        <li>将来scss要らないムーブメントが到来し、cssのみの環境になった時、もしcssにmixin機能がなかったらこれが実装できなくなることに懸念があります。</li>
+                                    </ul>
+                                </div>
+                                <div class="section-chunk">
+                                    <p class="chunk-message mb-60">
+                                        <strong>
+                                            フリーライセンスです。<br />
+                                            お使いの際は用法容量をお守りください。
+                                        </strong>
+                                    </p>
                                 </div>
                             </div>
                             <div class="js-tab-content" id="foo">

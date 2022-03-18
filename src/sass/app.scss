@@ -22,6 +22,9 @@ body {
 img {
   height: auto;
 }
+strong {
+  font-size: 1.5em;
+}
 .pc {
   @include sp {
     display: none !important;
@@ -151,6 +154,7 @@ img {
 
 .section {
   padding-top: 100px;
+  padding-bottom: 100px;
   &-chunk {
     + .section-chunk {
       margin-top: 80px;
@@ -172,6 +176,26 @@ img {
       margin-top: 0.5em;
     }
   }
+}
+.chunk-list {
+  li {
+    padding-left: 1.5em;
+    position: relative;
+    &::before {
+      content: "■";
+      display: inlin-block;
+      color: $blue;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    + li {
+      margin-top: 0.5em;
+    }
+  }
+}
+.chunk-message {
+  text-align: center;
 }
 
 .js-tab {
