@@ -15,6 +15,7 @@ export default class SwitchTab {
     [...this.titles.children].forEach((ttl, i) => {
       const TTL = ttl;
       TTL.dataset.ttlIndex = i;
+      TTL.style.cursor = 'pointer';
       TTL.addEventListener('click', (e) => {
         e.stopPropagation();
         this.changeTitles(e.currentTarget.dataset.ttlIndex);

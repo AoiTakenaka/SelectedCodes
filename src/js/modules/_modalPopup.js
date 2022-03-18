@@ -1,6 +1,7 @@
 export default class ModalPopup {
   constructor() {
     this.body = document.querySelector('body');
+    this.html = document.querySelector('html');
 
     // モーダルエリア作成
     this.area = document.createElement('div');
@@ -54,14 +55,14 @@ export default class ModalPopup {
     [...contents].forEach((cnt) => {
       const CNT = cnt;
       CNT.style.display = 'none';
-      this.body.style.overflow = 'initial';
+      this.html.style.overflow = 'initial';
     });
   }
 
   openModal(trg) {
     const contents = this.area.querySelectorAll('.modal-content');
     const index = trg.currentTarget.dataset.modalTrgIndex;
-    this.body.style.overflow = 'hidden';
+    this.html.style.overflow = 'hidden';
     contents[index].style.display = 'block';
     this.area.classList.toggle('is-active');
   }

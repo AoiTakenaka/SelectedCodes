@@ -8,11 +8,10 @@ html {
 body {
   display: block;
   position: relative;
-  overflow: hidden;
   font-size: 1.6rem;
   letter-spacing: 0.05em;
   line-height: 1.71;
-  color: #000;
+  color: $black;
   @include sp {
     font-size: 1.4rem;
   }
@@ -32,6 +31,14 @@ img {
   @include pc {
     display: none !important;
   }
+}
+.inner {
+  max-width: 1320px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 120px;
+  padding-right: 120px;
 }
 
 #modal {
@@ -115,9 +122,151 @@ img {
 }
 .modal-tirgger {
   cursor: pointer;
+  text-decoration: underline;
+  color: $blue;
+  transition: opacity 0.6s $ease;
+  &:hover {
+    opacity: 0.6;
+  }
 }
 .modal-content {
   background: #fff;
   max-height: calc(90vh - 50px);
   overflow-y: scroll;
+}
+
+.code {
+  background: $black;
+  color: #fff;
+  padding: 30px 1em;
+  &-type {
+    &-sass {
+      background: #cd6799;
+      color: #fff;
+      display: inline-block;
+      padding: 0 1em;
+    }
+  }
+}
+
+.section {
+  padding-top: 100px;
+  &-chunk {
+    + .section-chunk {
+      margin-top: 80px;
+    }
+    > *:not(:first-child) {
+      margin-top: 30px;
+    }
+  }
+}
+.chunk-title {
+  color: $blue;
+  font-size: 2.8rem;
+  font-weight: bold;
+  border-bottom: 3px solid $blue;
+}
+.chunk-desc {
+  > * {
+    &:not(:first-child) {
+      margin-top: 0.5em;
+    }
+  }
+}
+
+.js-tab {
+  &-titles {
+    display: flex;
+    justify-content: space-between;
+  }
+  &-title {
+    color: #fff;
+    font-size: 2.2rem;
+    text-align: center;
+    padding: 1em;
+    width: 40%;
+    background: $blue;
+    &:not(.is-active) {
+      opacity: 0.5;
+    }
+  }
+  &-contents {
+    border: 5px solid $blue;
+  }
+  &-content {
+    padding: 40px;
+  }
+}
+
+.footer {
+  &-hopper {
+    background: $blue;
+    a {
+      display: block;
+      color: #fff;
+      text-align: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      font-size: 1.8rem;
+      font-weight: bold;
+      transition: opacity 0.6s $ease;
+      &:hover {
+        opacity: 0.6;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+.pseudo {
+  &-html {
+    width: 600px;
+    padding: 40px;
+  }
+  &-text {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  &-mv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    background: $blue;
+    color: #fff;
+  }
+  &-section {
+    padding: 50px 20px;
+    background: rgb(202, 219, 219);
+    &:nth-child(odd) {
+      background: rgb(170, 216, 216);
+    }
+  }
+  &-footer {
+    background: $blue;
+    color: #fff;
+  }
+}
+
+// サンプル
+.box {
+  height: 0;
+  padding-top: 100px;
+  background: $yellow;
+}
+.sample-col3 {
+  ul {
+    @include setColumn(3, 40px);
+  }
+}
+.sample-col4 {
+  ul {
+    @include setColumn(4, 5%, 20px);
+  }
+}
+.sample-col5 {
+  ul {
+    @include setColumn(5, 5px);
+  }
 }

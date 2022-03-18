@@ -8,6 +8,10 @@ $w-pc: 768px;
 // 標準イージング
 $ease: cubic-bezier(0.215, 0.61, 0.355, 1);
 
+$yellow: rgb(217, 245, 58);
+$blue: darkcyan;
+$black: #333;
+
 // メディアクエリMixin
 @mixin sp() {
   @media screen and (max-width: $w-sp) {
@@ -35,6 +39,76 @@ $ease: cubic-bezier(0.215, 0.61, 0.355, 1);
     }
     &:nth-child(n + #{$division + 1}) {
       margin-top: $marginTop;
+    }
+  }
+}
+
+// マージン
+.mt {
+  @for $i from 1 through 10 {
+    &-#{$i * 10} {
+      margin-top: #{$i * 10}px !important;
+    }
+    &_pc-#{$i * 10} {
+      @include pc {
+        margin-top: #{$i * 10}px !important;
+      }
+    }
+    &_sp-#{$i * 10} {
+      @include sp {
+        margin-top: #{$i * 10}px !important;
+      }
+    }
+  }
+}
+.mr {
+  @for $i from 1 through 10 {
+    &-#{$i * 10} {
+      margin-right: #{$i * 10}px !important;
+    }
+    &_pc-#{$i * 10} {
+      @include pc {
+        margin-right: #{$i * 10}px !important;
+      }
+    }
+    &_sp-#{$i * 10} {
+      @include sp {
+        margin-right: #{$i * 10}px !important;
+      }
+    }
+  }
+}
+.mb {
+  @for $i from 1 through 10 {
+    &-#{$i * 10} {
+      margin-bottom: #{$i * 10}px !important;
+    }
+    &_pc-#{$i * 10} {
+      @include pc {
+        margin-bottom: #{$i * 10}px !important;
+      }
+    }
+    &_sp-#{$i * 10} {
+      @include sp {
+        margin-bottom: #{$i * 10}px !important;
+      }
+    }
+  }
+}
+.ml {
+  @for $i from 1 through 10 {
+    &-#{$i * 10} {
+      margin-left: #{$i * 10}px !important;
+    }
+    &_pc-#{$i * 10} {
+      @include pc {
+        margin-left: #{$i * 10}px !important;
+      }
+    }
+    &_sp-#{$i * 10} {
+      @include sp {
+        margin-left: #{$i * 10}px !important;
+      }
     }
   }
 }
