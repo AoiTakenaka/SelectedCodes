@@ -192,6 +192,22 @@
                                         <li>
                                             pc/spの使い分けはどうするのと思われるかもしれません。引数にスマホ用の枠を設けて使い分けることもできますが、その時引数の数が少なくとも６つ必要になるので意図的に実装していません。お馴染みの「@include:
                                             pc{}, @include: sp{}」で分けてやるのが良いかと思います。
+                                            <div class="code-wrapper mt-10">
+                                                <div class="code-type-sass">sass</div>
+                                                <pre class="code">
+                                            .sample-col5 {
+                                                &emsp;ul {
+                                                    &emsp;&emsp;@include pc{
+                                                        &emsp;&emsp;&emsp;@include setColumn(5, 3%, 6%);
+                                                    &emsp;&emsp;}
+                                                    &emsp;&emsp;@include sp{
+                                                        &emsp;&emsp;&emsp;@include setColumn(2, 5vw);
+                                                    &emsp;&emsp;}
+                                                &emsp;}
+                                            }
+                                        </pre
+                                                >
+                                            </div>
                                         </li>
                                         <li>将来scss要らないムーブメントが到来し、cssのみの環境になった時、もしcssにmixin機能がなかったらこれが実装できなくなることに懸念があります。</li>
                                     </ul>
