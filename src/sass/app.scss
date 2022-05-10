@@ -123,7 +123,7 @@ strong {
     opacity: 1;
   }
 }
-.modal-tirgger {
+.modal-tirgger, .link {
   cursor: pointer;
   text-decoration: underline;
   color: $blue;
@@ -303,10 +303,14 @@ strong {
 // 他薦サンプル
 .sample{
   &-itemlist{
-    @include setColumn(3);
+    @include setColumn(3,20px);
   }
   &-item-detail{
     color: #fff;
-    background: #11415a;
+    background: darkcyan;
+    padding: 10px;
+  }
+  &-item-price{
+    margin-top: 0.4em;
   }
 }
