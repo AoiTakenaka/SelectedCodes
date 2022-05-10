@@ -56,10 +56,20 @@ const smoothScroll = () => {
   }
 };
 
+const roadJsonFunc = (CLASSNAME) => {
+  const dist = [...document.querySelectorAll(CLASSNAME)];
+  if(dist.length === 0) return;
+  const filename = CLASSNAME.replace('.js-roadJson-', "");
+
+  const jsonData = require(`/public/json/${filename}.json`);
+  console.log(typeof jsonData);
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   threeFnc();
   tabFnc();
   modalFnc();
+  roadJsonFunc('.js-roadJson-itemlist');
 });
 
 window.addEventListener('load', () => {
