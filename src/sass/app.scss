@@ -278,7 +278,7 @@ strong {
   padding-right: 1em;
 }
 
-// サンプル
+// 自薦サンプル
 .box {
   height: 0;
   padding-top: 100px;
@@ -297,5 +297,16 @@ strong {
 .sample-col5 {
   ul {
     @include setColumn(5, 5px);
+  }
+}
+
+// 他薦サンプル
+.sample{
+  &-itemlist{
+    @include setColumn(3);
+  }
+  &-item-detail{
+    color: #fff;
+    background: #11415a;
   }
 }

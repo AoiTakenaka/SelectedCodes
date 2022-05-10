@@ -117,3 +117,4 @@ https://www.buffaloes.co.jp/special/natsunojin2021/#sponsor
 
 [素晴らしいと思った理由]
 運用者にとって更新がわかりやすくなる。
+閉じタグの不在などミスがなくなる。
