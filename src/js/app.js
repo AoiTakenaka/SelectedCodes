@@ -60,9 +60,41 @@ const roadJsonFunc = (CLASSNAME) => {
   const dist = [...document.querySelectorAll(CLASSNAME)];
   if(dist.length === 0) return;
   const filename = CLASSNAME.replace('.js-roadJson-', "");
+  const url = `/public/json/${filename}.json`;
 
-  const jsonData = require(`/public/json/${filename}.json`);
-  console.log(typeof jsonData);
+  const itemlistDOM = (OBJECT) => {
+    const {img, itmeName, price} = OBJECT;
+    const li = document.createElement('li');
+    // prettier-ignore
+    const template = `
+          <div class="sample-item-image">
+              <img src="${img}" alt="${itmeName}">
+          </div>
+          <div class="sample-item-detail">
+              <h3 class="sample-item-name">${itmeName}</h3>
+              <p class="sample-item-price">
+                  ${price}
+              </p>
+          </div>
+    `;
+
+    li.classList.add('sample-item');
+    li.innerHTML = template;
+
+    return li;
+  }
+
+  const appendDOM = (DOM) => {
+    dist.forEach((DIST) => DIST.appendChild(DOM));
+  }
+
+  fetch(url)
+    .then(RESPONSE => RESPONSE.json())
+    .then(JSON => {
+        JSON.forEach((json) => {
+          appendDOM(itemlistDOM(json));
+        });
+    })
 };
 
 document.addEventListener('DOMContentLoaded', () => {

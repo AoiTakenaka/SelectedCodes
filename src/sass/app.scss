@@ -138,20 +138,6 @@ strong {
   overflow-y: scroll;
 }
 
-.code {
-  background: $black;
-  color: #fff;
-  padding: 30px 1em;
-  &-type {
-    &-sass {
-      background: #cd6799;
-      color: #fff;
-      display: inline-block;
-      padding: 0 1em;
-    }
-  }
-}
-
 .section {
   padding-top: 100px;
   padding-bottom: 100px;
@@ -219,6 +205,54 @@ strong {
   }
   &-content {
     padding: 40px;
+  }
+}
+
+.code {
+  background: $black;
+  color: #fff;
+  padding: 30px 1em;
+  &-type {
+    &-sass {
+      background: #cd6799;
+      color: #fff;
+      display: inline-block;
+      padding: 0 1em;
+    }
+    &-json{
+      background: #9777a8;
+      color: #fff;
+      display: inline-block;
+      padding: 0 1em;
+    }
+    &-js {
+      background: #f7df1e;
+      color: #333;
+      display: inline-block;
+      padding: 0 1em;
+    }
+    &-html {
+      background: #e6632a;
+      color: #fff;
+      display: inline-block;
+      padding: 0 1em;
+    }
+  }
+  &-tab{
+    .js-tab-contents{
+      border: initial;
+    }
+    .js-tab-titles{
+      justify-content: flex-start;
+    }
+    .js-tab-title{
+      font-size: initial;
+      text-align: initial;
+      width: initial;
+      + .js-tab-title{
+        margin-left: 5px;
+      }
+    }
   }
 }
 
@@ -303,14 +337,37 @@ strong {
 // 他薦サンプル
 .sample{
   &-itemlist{
+    margin-top: 20px;
     @include setColumn(3,20px);
+  }
+  &-item{
+    border: 5px solid darkcyan;
+    display: flex;
+    flex-direction: column;
   }
   &-item-detail{
     color: #fff;
     background: darkcyan;
     padding: 10px;
+    flex-grow: 1;
+	  display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &-item-name{
+    font-weight: bold;
   }
   &-item-price{
     margin-top: 0.4em;
+  }
+  &-area{
+    padding: 40px;
+    background: #eee;
+  }
+  &-area-title{
+    font-weight: bold;
+    text-align: center;
+    font-size: 2.4rem;
+    color: darkcyan;
   }
 }

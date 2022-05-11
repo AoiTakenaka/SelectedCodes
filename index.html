@@ -254,73 +254,150 @@
                                             このjsonの構造を応用して、よくあるアイテムリストを作成してみました。
                                         </p>
                                     </div>
-                                    <ul class="sample-itemlist js-roadJson-itemlist"></ul>
+                                    <div class="sample-area">
+                                        <h4 class="sample-area-title">サンプル</h4>
+                                        <ul class="sample-itemlist js-roadJson-itemlist"></ul>
+                                    </div>
+                                    <div class="chunk-desc">
+                                        <p>
+                                            jsonフォルダを作成し、そこに商品の情報をオブジェクト形式でまとめています。jsでjsonファイルをアクセスし、事前に作っておいたテンプレートDOMに当て込み、それをhtmlの特定のクラスがついた箇所に排出するようになっています。
+                                        </p>
+                                    </div>
+                                    <div class="js-tab code-tab">
+                                        <ul class="js-tab-titles">
+                                            <li class="js-tab-title code-type-json">json</li>
+                                            <li class="js-tab-title code-type-html">html</li>
+                                            <li class="js-tab-title code-type-js">js</li>
+                                        </ul>
+                                        <div class="js-tab-contents">
+                                            <pre class="js-tab-content code">
+                                                [
+                                                    &emsp;{
+                                                        &emsp;&emsp;"id": "item1",
+                                                        &emsp;&emsp;"img": "~.jpg",
+                                                        &emsp;&emsp;"itmeName": "ファイト！九州ユニフォーム(S／L)",
+                                                        &emsp;&emsp;"price": "各4,000円(税込)"
+                                                    &emsp;},
+                                                    &emsp;{
+                                                        &emsp;&emsp;"id":"item2",
+                                                        &emsp;&emsp;"img": "~.jpg",
+                                                        &emsp;&emsp;"itmeName": "ショートツインメガホン",
+                                                        &emsp;&emsp;"price": "900円(税込)"
+                                                    &emsp;},
+                                                    &emsp;...みたいにオブジェクトが連なります
+                                                ]
+                                            </pre>
+                                            <pre class="js-tab-content code">
+                                                &lt;div class="sample-area">
+                                                    &emsp;&lt;h4 class="sample-area-title">サンプル&lt;/h4>
+                                                    &emsp;&lt;ul class="sample-itemlist js-roadJson-itemlist">&lt;/ul>
+                                                &lt;/div>
+                                            </pre>
+                                            <pre class="js-tab-content code">
+                                                const roadJsonFunc = (CLASSNAME) => {
+                                                    &emsp;const dist = [...document.querySelectorAll(CLASSNAME)];
+                                                    &emsp;if(dist.length === 0) return;
+                                                    &emsp;const filename = CLASSNAME.replace('.js-roadJson-', "");
+                                                    &emsp;const url = `/public/json/${filename}.json`;
+
+                                                    &emsp;const itemlistDOM = (OBJECT) => {
+                                                    &emsp;&emsp;const {img, itmeName, price} = OBJECT;
+                                                    &emsp;&emsp;const li = document.createElement('li');
+                                                    &emsp;&emsp;// prettier-ignore
+                                                    &emsp;&emsp;const template = `
+                                                            &emsp;&emsp;&emsp;&lt;div class="sample-item-image">
+                                                                &emsp;&emsp;&emsp;&emsp;&lt;img src="${img}" alt="${itmeName}">
+                                                            &emsp;&emsp;&emsp;&lt;/div>
+                                                            &emsp;&emsp;&emsp;&lt;div class="sample-item-detail">
+                                                                &emsp;&emsp;&emsp;&emsp;&lt;h3 class="sample-item-name">${itmeName}&lt;/h3>
+                                                                &emsp;&emsp;&emsp;&emsp;&lt;p class="sample-item-price">
+                                                                    &emsp;&emsp;&emsp;&emsp;&emsp;${price}
+                                                               &emsp; &emsp;&emsp;&emsp;&lt;/p>
+                                                            &emsp;&emsp;&emsp;&lt;/div>
+                                                    &emsp;&emsp;`;
+
+                                                    &emsp;&emsp;li.classList.add('sample-item');
+                                                    &emsp;&emsp;li.innerHTML = template;
+
+                                                    &emsp;&emsp;return li;
+                                                    &emsp;}
+
+                                                    &emsp;const appendDOM = (DOM) => {
+                                                        &emsp;&emsp;dist.forEach((DIST) => DIST.appendChild(DOM));
+                                                    &emsp;}
+
+                                                    &emsp;fetch(url)
+                                                    &emsp;.then(RESPONSE => RESPONSE.json())
+                                                    &emsp;.then(JSON => {
+                                                        &emsp;&emsp;JSON.forEach((json) => {
+                                                            &emsp;&emsp;&emsp;appendDOM(itemlistDOM(json));
+                                                        &emsp;&emsp;});
+                                                    &emsp;})
+                                                };
+                                            </pre>
+                                        </div>
+                                    </div>
+                                    <div class="chunk-desc">
+                                        <p>
+                                            生のhtmlで記述した場合は👇こちらです。
+                                        </p>
+                                    </div>
+                                    <div class="code-wrapper">
+                                        <div class="code-type-html">html</div>
+                                        <pre class="code">
+                                            &lt;ul class="sample-itemlist js-roadJson-itemlist">
+                                               &emsp;&lt;li class="sample-item">
+                                                    &emsp;&emsp;&lt;div class="sample-item-image">
+                                                        &emsp;&emsp;&emsp;&lt;img src="〜.jpg" alt="ファイト！九州ユニフォーム(S／L)">
+                                                    &emsp;&emsp;&lt;/div>
+                                                    &emsp;&emsp;&lt;div class="sample-item-detail">
+                                                        &emsp;&emsp;&emsp;&lt;h3 class="sample-item-name">ファイト！九州ユニフォーム(S／L)&lt;/h3>
+                                                        &emsp;&emsp;&emsp;&lt;p class="sample-item-price">
+                                                            &emsp;&emsp;&emsp;&emsp;&emsp;各4,000円(税込)
+                                                        &emsp;&emsp;&emsp;&lt;/p>
+                                                    &emsp;&emsp;&lt;/div>
+                                                &emsp;&lt;/li>
+                                                &emsp;&lt;li class="sample-item">
+                                                   &emsp;&emsp;&lt;div class="sample-item-image">
+                                                        &emsp;&emsp;&emsp;&lt;img src="〜.jpg" alt="ショートツインメガホン">
+                                                    &emsp;&emsp;&lt;/div>
+                                                    &emsp;&emsp;&lt;div class="sample-item-detail">
+                                                        &emsp;&emsp;&emsp;&lt;h3 class="sample-item-name">ショートツインメガホン&lt;/h3>
+                                                        &emsp;&emsp;&emsp;&lt;p class="sample-item-price">
+                                                            &emsp;&emsp;&emsp;&emsp;&emsp;900円(税込)
+                                                        &emsp;&emsp;&emsp;&lt;/p>
+                                                    &emsp;&emsp;&lt;/div>
+                                                &emsp;&lt;/li>
+                                                &emsp;...liが連なります
+                                            &lt;/ul>
+                                        </pre>
+                                    </div>
+                                    <div class="chunk-desc">
+                                        <p>
+                                            こうして見比べてみると生のhtmlは一見するとごちゃついて見え、改めてjsonでの更新の方がしやすいように思えます。
+                                        </p>
+                                        <p>
+                                            以上のような利点から、今後活用できそうな機会があればできる限り取り入れていこうと思います！
+                                        </p>
+                                    </div>
                                 </div>
-                                🦑
-                                <ul class="sample-itemlist">
-                                    <li class="sample-item">
-                                        <div class="sample-item-image">
-                                            <img src="https://www.softbankhawks.co.jp/ex/aid/2022/img/goods/goods-uniform.jpg" alt="">
-                                        </div>
-                                        <div class="sample-item-detail">
-                                            <h3 class="sample-item-name">ファイト！九州ユニフォーム(S／L)</h3>
-                                            <p class="sample-item-price">
-                                                各4,000円
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="sample-item">
-                                        <div class="sample-item-image">
-                                            <img src="https://www.softbankhawks.co.jp/ex/aid/2022/img/goods/goods-uniform.jpg" alt="">
-                                        </div>
-                                        <div class="sample-item-detail">
-                                            <h3 class="sample-item-name">ファイト！九州ユニフォーム(S／L)</h3>
-                                            <p class="sample-item-price">
-                                                各4,000円
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="sample-item">
-                                        <div class="sample-item-image">
-                                            <img src="https://www.softbankhawks.co.jp/ex/aid/2022/img/goods/goods-uniform.jpg" alt="">
-                                        </div>
-                                        <div class="sample-item-detail">
-                                            <h3 class="sample-item-name">ファイト！九州ユニフォーム(S／L)</h3>
-                                            <p class="sample-item-price">
-                                                各4,000円
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="sample-item">
-                                        <div class="sample-item-image">
-                                            <img src="https://www.softbankhawks.co.jp/ex/aid/2022/img/goods/goods-uniform.jpg" alt="">
-                                        </div>
-                                        <div class="sample-item-detail">
-                                            <h3 class="sample-item-name">ファイト！九州ユニフォーム(S／L)</h3>
-                                            <p class="sample-item-price">
-                                                各4,000円
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <div class="section-chunk">
+                                    <p class="chunk-message mb-60">
+                                        <strong>
+                                            終わり
+                                        </strong>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <div class="js-modal">
-                <div class="modal-tirgger">モーダルトリガ1</div>
-                <div class="modal-content" style="display: none">
-                    <!-- ここにモーダルの内容 -->
-                    🛰🛰🛰🛰🛰
-                    <div class="" style="height: 150vh"></div>
-                </div>
-            </div>
         </main>
 
         <footer class="footer">
             <div class="footer-hopper">
-                <a href="#section">To Section Top ▲</a>
+                <a href="#section">To Tab Top ▲</a>
             </div>
         </footer>
 
