@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja" class="no-js">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Gonna find a way!</title>
+        <link rel="stylesheet" href="./public/css/app.css" />
+    </head>
+    <body>
+        <main>
+            <section class="mv">
+                <!-- <canvas id="canvas"></canvas> -->
+            </section>
+            <section class="section" id="section">
+                <div class="inner">
+                    <div class="js-tab">
+                        <ul class="js-tab-titles">
+                            <li class="js-tab-title">自薦</li>
+                            <li class="js-tab-title">他薦</li>
+                        </ul>
+                        <div class="js-tab-contents">
+                            <div class="js-tab-content">
+                                <!-- タブの内容をここに記述 -->
+                                <div class="section-chunk">
+                                    <h2 class="chunk-title">そのコードを生み出す経緯</h2>
+                                    <div class="chunk-desc">
+                                        <p>3カラムとか複数カラムのデザインってよくありますよね。</p>
+                                        <div>
+                                            そして
+                                            <span class="js-modal">
+                                                <span class="modal-tirgger">こんなふうに</span>
+                                                <div class="modal-content" style="display: none">
+                                                    <!-- ここにモーダルの内容 -->
+                                                    <div class="pseudo-html">
+                                                        <div class="pseudo-mv">
+                                                            <div class="pseudo-text">擬似ページ</div>
+                                                        </div>
+                                                        <div class="pseudo-section">
+                                                            <div class="pseudo-text">section</div>
+                                                            <div class="sample-col3 mt-20">
+                                                                <ul>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="pseudo-section">
+                                                            <div class="pseudo-text">section</div>
+                                                            <div class="sample-col5 mt-20">
+                                                                <ul>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="pseudo-section">
+                                                            <div class="pseudo-text">section</div>
+                                                            <div class="sample-col4 mt-20">
+                                                                <ul>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                    <li class="box"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="pseudo-footer">
+                                                            <div class="pseudo-text">footer</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                            一ページのうちに２カラムだったり、５カラムだったりカラム数が別々の時もまあまあありますよね。
+                                        </div>
+                                        <p>そんな時みなさんはsass(css)でどのように組んでますか？</p>
+                                        <p>
+                                            カラムの要素の幅をx分の１％に指定して、flex-wrapにしたり、n番目以降の要素に上余白を設ける設定をしたり、ある場合では等差数列の式を考えたり、あるいは丁度前回やっていたりして、そこからコードを探したりするかもしれません。でもちょっと大変ですよね。しかもそれがカラム数が別々の時だとそのパターンを改めて組まなきゃならない。
+                                        </p>
+                                        <p>自分はめんどいな〜と思いつつ別個にコツコツと組んでいましたが、ある時これ抽象化できるかも！と直感が湧きました。</p>
+                                        <p>そこで作成したコードはこちら👇です。</p>
+                                    </div>
+                                    <div class="code-wrapper">
+                                        <div class="code-type-sass">sass</div>
+                                        <pre class="code">
+                                            @mixin setColumn($division: 4, $marginLeft: 5%, $marginTop: $marginLeft) {
+                                                &emsp;display: flex;
+                                                &emsp;flex-wrap: wrap;
+                                                &emsp;> * {
+                                                    &emsp;&emsp;width: calc((100% - #{$marginLeft} * (#{$division} - 1)) / #{$division});
+                                                    &emsp;&emsp;&:not(:nth-child(#{$division}n + 1)) {
+                                                        &emsp;&emsp;&emsp;margin-left: $marginLeft;
+                                                    &emsp;&emsp;}
+                                                    &emsp;&emsp;&:nth-child(n + #{$division + 1}) {
+                                                        &emsp;&emsp;&emsp;margin-top: $marginTop;
+                                                    &emsp;&emsp;}
+                                                &emsp;}
+                                            }
+
+                                            @include setColumn(3);
+                                        </pre>
+                                    </div>
+                                </div>
+                                <div class="section-chunk">
+                                    <h2 class="chunk-title">そのコードで実現する結果</h2>
+                                    <div class="chunk-desc">
+                                        <p>mixin関数の引数に「カラム数、横隣の余白、縦隣の余白」を入れるだけで任意のカラム割ができます！</p>
+                                    </div>
+                                    <div class="chunk-desc">
+                                        <p>👇こんな冗長なコードが</p>
+                                    </div>
+                                    <div class="code-wrapper">
+                                        <div class="code-type-sass">sass</div>
+                                        <pre class="code">
+                                            .sample-col3 {
+                                                &emsp;ul {
+                                                    &emsp;&emsp;display: flex;
+                                                    &emsp;&emsp;flex-wrap: wrap;
+                                                &emsp;}
+                                                &emsp;li {
+                                                    &emsp;&emsp;width: 30%;
+                                                    &emsp;&emsp;&:not(:nth-child(3n + 1)) {
+                                                        &emsp;&emsp;&emsp;margin-left: 5%;
+                                                    &emsp;&emsp;}
+                                                    &emsp;&emsp;&:nth-child(n + 4) {
+                                                        &emsp;&emsp;&emsp;margin-top: 2.5%;
+                                                    &emsp;&emsp;}
+                                                &emsp;}
+                                            }
+
+                                            .sample-col5 {
+                                                &emsp;ul {
+                                                    &emsp;&emsp;display: flex;
+                                                    &emsp;&emsp;flex-wrap: wrap;
+                                                &emsp;}
+                                                &emsp;li {
+                                                    &emsp;&emsp;width: 16%;
+                                                    &emsp;&emsp;&:not(:nth-child(5n + 1)) {
+                                                        &emsp;&emsp;&emsp;margin-left: 3%;
+                                                    &emsp;&emsp;}
+                                                    &emsp;&emsp;&:nth-child(n + 6) {
+                                                        &emsp;&emsp;&emsp;margin-top: 6%;
+                                                    &emsp;&emsp;}
+                                                &emsp;}
+                                            }
+                                        </pre>
+                                    </div>
+                                    <div class="chunk-desc">
+                                        <p>👇のように結構省略できます！</p>
+                                    </div>
+                                    <div class="code-wrapper">
+                                        <div class="code-type-sass">sass</div>
+                                        <pre class="code">
+                                            .sample-col3 {
+                                                &emsp;ul {
+                                                    &emsp;&emsp;@include setColumn(3, 5%, 2.5%);
+                                                &emsp;}
+                                            }
+
+                                            .sample-col5 {
+                                                &emsp;ul {
+                                                    &emsp;&emsp;@include setColumn(5, 3%, 6%);
+                                                &emsp;}
+                                            }
+                                        </pre>
+                                    </div>
+                                </div>
+                                <div class="section-chunk">
+                                    <h2 class="chunk-title">そのコードが素晴らしいと思う理由</h2>
+                                    <div class="chunk-desc">
+                                        <p>以上のようにsassの記述量を減らせるし、ある程度直感的にカラムを設定できるんじゃないでしょうか。</p>
+                                        <p>また、作ってもその時限りでしか使わないということがなく、自分が担当したページで使うことが結構あり汎用性・実用性があると思います。</p>
+                                    </div>
+                                </div>
+                                <div class="section-chunk">
+                                    <h2 class="chunk-title">補足</h2>
+                                    <ul class="chunk-list">
+                                        <li>
+                                            引数を省略することができます。第3引数を省略すると横余白を縦余白に当て込み、縦横等間隔の余白となります。第1・第2引数を省略してもデフォルトで、縦横5%の余白の４分割カラムになります。
+                                        </li>
+                                        <li>マージンのパーセントをpx,em,rem,vw...などにすることもできます。</li>
+                                        <li>flex関連でこの関数に定義しているのはflex-wrapだけなので自由にカスタマイズできます。</li>
+                                        <li>
+                                            pc/spの使い分けはどうするのと思われるかもしれません。引数にスマホ用の枠を設けて使い分けることもできますが、その時引数の数が少なくとも６つ必要になるので意図的に実装していません。お馴染みの「@include:
+                                            pc{}, @include: sp{}」で分けてやるのが良いかと思います。
+                                            <div class="code-wrapper mt-10">
+                                                <div class="code-type-sass">sass</div>
+                                                <pre class="code">
+                                            .sample-col5 {
+                                                &emsp;ul {
+                                                    &emsp;&emsp;@include pc{
+                                                        &emsp;&emsp;&emsp;@include setColumn(5, 3%, 6%);
+                                                    &emsp;&emsp;}
+                                                    &emsp;&emsp;@include sp{
+                                                        &emsp;&emsp;&emsp;@include setColumn(2, 5vw);
+                                                    &emsp;&emsp;}
+                                                &emsp;}
+                                            }
+                                        </pre
+                                                >
+                                            </div>
+                                        </li>
+                                        <li>将来scss要らないムーブメントが到来し、cssのみの環境になった時、もしcssにmixin機能がなかったらこれが実装できなくなることに懸念があります。</li>
+                                    </ul>
+                                </div>
+                                <div class="section-chunk">
+                                    <p class="chunk-message mb-60">
+                                        <strong>
+                                            エディタみたいな見た目にする<br>
+                                            ライブラリご存知ありませんか？
+                                        </strong>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="js-tab-content" id="foo">
+                                <!-- タブの内容をここに記述 -->
+                                <div class="section-chunk">
+                                    <h2 class="chunk-title">他薦コード</h2>
+                                    <div class="chunk-desc">
+                                        <p>
+                                            佐々木さんコーディング「<a href="https://www.buffaloes.co.jp/special/natsunojin2021/#sponsor" target="_blank" class="link">バッファローズ夏の陣2021</a>」のスポンサーバナーに使われている、jsonの連携を推薦します！
+                                        </p>
+                                        <p>この仕組みは、番号（おそらく画像名に使う）・会社名・会社のサイトURLでできたオブジェクトを配列にまとめ、jsonファイルにして独立させ、jsにて呼び出してそのjsonを当て込んだDOMを生成し、然る箇所に出力しているのだと思います。
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="section-chunk">
+                                    <h2 class="chunk-title">素晴らしいと思った理由</h2>
+                                    <div class="chunk-desc">
+                                        <p>
+                                            更新する箇所を別個に独立させると運用者にとっても把握しやすいと思いますし、閉じタグの不在などのような構文エラーも防止できるのでいいなともいました。
+                                        </p>
+                                        <p>
+                                            安定したパターンの場合、繰り返し処理を行うのはスマートな方法だと思います。
+                                        </p>
+                                        <p>
+                                            htmlがスッキリします。
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="section-chunk">
+                                    <h2 class="chunk-title">実現する結果</h2>
+                                    <div class="chunk-desc">
+                                        <p>
+                                            このjsonの構造を応用して、よくあるアイテムリストを作成してみました。
+                                        </p>
+                                    </div>
+                                    <div class="sample-area">
+                                        <h4 class="sample-area-title">サンプル</h4>
+                                        <ul class="sample-itemlist js-roadJson-itemlist"></ul>
+                                    </div>
+                                    <div class="chunk-desc">
+                                        <p>
+                                            jsonフォルダを作成し、そこに商品の情報をオブジェクト形式でまとめています。jsでjsonファイルをアクセスし、事前に作っておいたテンプレートDOMに当て込み、それをhtmlの特定のクラスがついた箇所に排出するようになっています。
+                                        </p>
+                                    </div>
+                                    <div class="js-tab code-tab">
+                                        <ul class="js-tab-titles">
+                                            <li class="js-tab-title code-type-json">json</li>
+                                            <li class="js-tab-title code-type-html">html</li>
+                                            <li class="js-tab-title code-type-js">js</li>
+                                        </ul>
+                                        <div class="js-tab-contents">
+                                            <pre class="js-tab-content code">
+                                                [
+                                                    &emsp;{
+                                                        &emsp;&emsp;"id": "item1",
+                                                        &emsp;&emsp;"img": "~.jpg",
+                                                        &emsp;&emsp;"itmeName": "ファイト！九州ユニフォーム(S／L)",
+                                                        &emsp;&emsp;"price": "各4,000円(税込)"
+                                                    &emsp;},
+                                                    &emsp;{
+                                                        &emsp;&emsp;"id":"item2",
+                                                        &emsp;&emsp;"img": "~.jpg",
+                                                        &emsp;&emsp;"itmeName": "ショートツインメガホン",
+                                                        &emsp;&emsp;"price": "900円(税込)"
+                                                    &emsp;},
+                                                    &emsp;...みたいにオブジェクトが連なります
+                                                ]
+                                            </pre>
+                                            <pre class="js-tab-content code">
+                                                &lt;div class="sample-area">
+                                                    &emsp;&lt;h4 class="sample-area-title">サンプル&lt;/h4>
+                                                    &emsp;&lt;ul class="sample-itemlist js-roadJson-itemlist">&lt;/ul>
+                                                &lt;/div>
+                                            </pre>
+                                            <pre class="js-tab-content code">
+                                                const roadJsonFunc = (CLASSNAME) => {
+                                                    &emsp;const dist = [...document.querySelectorAll(CLASSNAME)];
+                                                    &emsp;if(dist.length === 0) return;
+                                                    &emsp;const filename = CLASSNAME.replace('.js-roadJson-', "");
+                                                    &emsp;const url = `/public/json/${filename}.json`;
+
+                                                    &emsp;const itemlistDOM = (OBJECT) => {
+                                                    &emsp;&emsp;const {img, itmeName, price} = OBJECT;
+                                                    &emsp;&emsp;const li = document.createElement('li');
+                                                    &emsp;&emsp;// prettier-ignore
+                                                    &emsp;&emsp;const template = `
+                                                            &emsp;&emsp;&emsp;&lt;div class="sample-item-image">
+                                                                &emsp;&emsp;&emsp;&emsp;&lt;img src="${img}" alt="${itmeName}">
+                                                            &emsp;&emsp;&emsp;&lt;/div>
+                                                            &emsp;&emsp;&emsp;&lt;div class="sample-item-detail">
+                                                                &emsp;&emsp;&emsp;&emsp;&lt;h3 class="sample-item-name">${itmeName}&lt;/h3>
+                                                                &emsp;&emsp;&emsp;&emsp;&lt;p class="sample-item-price">
+                                                                    &emsp;&emsp;&emsp;&emsp;&emsp;${price}
+                                                               &emsp; &emsp;&emsp;&emsp;&lt;/p>
+                                                            &emsp;&emsp;&emsp;&lt;/div>
+                                                    &emsp;&emsp;`;
+
+                                                    &emsp;&emsp;li.classList.add('sample-item');
+                                                    &emsp;&emsp;li.innerHTML = template;
+
+                                                    &emsp;&emsp;return li;
+                                                    &emsp;}
+
+                                                    &emsp;const appendDOM = (DOM) => {
+                                                        &emsp;&emsp;dist.forEach((DIST) => DIST.appendChild(DOM));
+                                                    &emsp;}
+
+                                                    &emsp;fetch(url)
+                                                    &emsp;.then(RESPONSE => RESPONSE.json())
+                                                    &emsp;.then(JSON => {
+                                                        &emsp;&emsp;JSON.forEach((json) => {
+                                                            &emsp;&emsp;&emsp;appendDOM(itemlistDOM(json));
+                                                        &emsp;&emsp;});
+                                                    &emsp;})
+                                                };
+                                            </pre>
+                                        </div>
+                                    </div>
+                                    <div class="chunk-desc">
+                                        <p>
+                                            生のhtmlで記述した場合は👇こちらです。
+                                        </p>
+                                    </div>
+                                    <div class="code-wrapper">
+                                        <div class="code-type-html">html</div>
+                                        <pre class="code">
+                                            &lt;ul class="sample-itemlist js-roadJson-itemlist">
+                                               &emsp;&lt;li class="sample-item">
+                                                    &emsp;&emsp;&lt;div class="sample-item-image">
+                                                        &emsp;&emsp;&emsp;&lt;img src="〜.jpg" alt="ファイト！九州ユニフォーム(S／L)">
+                                                    &emsp;&emsp;&lt;/div>
+                                                    &emsp;&emsp;&lt;div class="sample-item-detail">
+                                                        &emsp;&emsp;&emsp;&lt;h3 class="sample-item-name">ファイト！九州ユニフォーム(S／L)&lt;/h3>
+                                                        &emsp;&emsp;&emsp;&lt;p class="sample-item-price">
+                                                            &emsp;&emsp;&emsp;&emsp;&emsp;各4,000円(税込)
+                                                        &emsp;&emsp;&emsp;&lt;/p>
+                                                    &emsp;&emsp;&lt;/div>
+                                                &emsp;&lt;/li>
+                                                &emsp;&lt;li class="sample-item">
+                                                   &emsp;&emsp;&lt;div class="sample-item-image">
+                                                        &emsp;&emsp;&emsp;&lt;img src="〜.jpg" alt="ショートツインメガホン">
+                                                    &emsp;&emsp;&lt;/div>
+                                                    &emsp;&emsp;&lt;div class="sample-item-detail">
+                                                        &emsp;&emsp;&emsp;&lt;h3 class="sample-item-name">ショートツインメガホン&lt;/h3>
+                                                        &emsp;&emsp;&emsp;&lt;p class="sample-item-price">
+                                                            &emsp;&emsp;&emsp;&emsp;&emsp;900円(税込)
+                                                        &emsp;&emsp;&emsp;&lt;/p>
+                                                    &emsp;&emsp;&lt;/div>
+                                                &emsp;&lt;/li>
+                                                &emsp;...liが連なります
+                                            &lt;/ul>
+                                        </pre>
+                                    </div>
+                                    <div class="chunk-desc">
+                                        <p>
+                                            こうして見比べてみると生のhtmlは一見するとごちゃついて見え、改めてjsonでの更新の方がしやすいように思えます。
+                                        </p>
+                                        <p>
+                                            以上のような利点から、今後活用できそうな機会があればできる限り取り入れていこうと思います！
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="section-chunk">
+                                    <p class="chunk-message mb-60">
+                                        <strong>
+                                            終わり
+                                        </strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-hopper">
+                <a href="#section">To Tab Top ▲</a>
+            </div>
+        </footer>
+
+        <!-- NOTICE : jQuery本体はすでに読み込まれてる場合は重複して読み込まない！！ -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <!-- NOTICE : jQuery本体はすでに読み込まれてる場合は重複して読み込まない！！ -->
+        <script src="./public/js/vendor.bundle.js" defer></script>
+        <script src="./public/js/app.bundle.js" defer></script>
+    </body>
+</html>
